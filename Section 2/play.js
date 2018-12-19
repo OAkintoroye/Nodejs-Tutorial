@@ -53,7 +53,7 @@ const person = {
     }
 };
 
-//using {} is called destructoring, this is used to directly
+//using {} is called destructuring, this is used to directly
 //target certian attributes of an object
 
 //for example below, the person object is passed into the printName function
@@ -65,14 +65,14 @@ const printName = ({name}) =>{
     console.log(name);
 }
 printName(person);
-//this method of destructoring can also be used to access more than
+//this method of destructuring can also be used to access more than
 //one attribute of an object
 
 //syntax : const {list of attributes} = object ; 
 //the value in the attributes are then stored in the same name!
 const {name, age} = person;
 console.log(name,age);
-//this can also be done for arrays (destructoring)
+//this can also be done for arrays (destructuring)
 const hobbies = ['Sports','Cooking'];
 const [hobby1,hobby2] = hobbies;
 console.log(hobby1,hobby2);
