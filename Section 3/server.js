@@ -32,20 +32,21 @@ const server = http.createServer((req,res)=>{
             console.log(chunk);
             body.push(chunk);
         });
-        req.on('end',() =>{
+        return req.on('end',() =>{
             const parsedBody = Buffer.concat(body).toString();
             const message = parsedBody.split('=')[1];
             //updates message.txt (if exist, if not it creates file) with current message
-            fs.writeFileSync('message.txt',message);
-
-        })
-        //302 stands for redirection
-        res.statusCode = 302;
-        //redirects to first page
-        res.setHeader('Location', '/');
-        //exit function or get an error :P
-        return res.end();
-
+            //using writeFileSync blocks any other code from being processed until the file has been created
+            //fs.writeFileSync('message.txt',message);
+            fs.writeFile('message.txt',message,err => {
+                //302 stands for redirection
+                res.statusCode = 302;
+                //redirects to first page
+                res.setHeader('Location', '/');
+                //exit function or get an error :P
+                return res.end();
+            });  
+        });  
     }
     res.setHeader('Content-Type','text/html');
     res.write('<html>');
