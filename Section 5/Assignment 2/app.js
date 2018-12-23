@@ -1,3 +1,6 @@
+//Note: express.js was installed to the root folder
+// Nodemon was installed globally
+
 const express = require('express');
 
 const app = express();
