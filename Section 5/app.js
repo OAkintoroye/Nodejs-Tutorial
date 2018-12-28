@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -11,15 +12,28 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({extended: false}));
 
 //considers the routes in the /routes/admin file
-app.use(adminRoutes);
+//app.use(adminRoutes);
 
 /** the middleware below will trigger for any link that begins with
 '/'. So it is important put middlewares that specify a specific path
 above this middleware, without the next()
 this way only the correct middleware will be processed!
 */
+/**
+ * The code below filters out/ignores '/admin' in any route address and passes the remaining
+ * address to be considered by express.js
+ */
+
+app.use('/admin',adminRoutes);
 app.use(shopRoutes);
 
+app.use((req,res,next)=>{
+    //if a route is entered but there is no middleware set for it
+    //submit a 404 error status and a message using send
+   // res.status(404).send('<h1>Page not found!</h1>');
+   res.status(404).sendFile(path.join(__dirname,'views','notfound.html'));
+
+});
 app.listen(3000);
 
 /*
