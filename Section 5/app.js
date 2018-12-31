@@ -9,8 +9,8 @@ const app = express();
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-app.use(bodyParser.urlencoded({extended: false}));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname,'public')));
 //considers the routes in the /routes/admin file
 //app.use(adminRoutes);
 
@@ -24,14 +24,14 @@ this way only the correct middleware will be processed!
  * address to be considered by express.js
  */
 
-app.use('/admin',adminRoutes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     //if a route is entered but there is no middleware set for it
     //submit a 404 error status and a message using send
-   // res.status(404).send('<h1>Page not found!</h1>');
-   res.status(404).sendFile(path.join(__dirname,'views','notfound.html'));
+    // res.status(404).send('<h1>Page not found!</h1>');
+    res.status(404).sendFile(path.join(__dirname, 'views', 'notfound.html'));
 
 });
 app.listen(3000);
