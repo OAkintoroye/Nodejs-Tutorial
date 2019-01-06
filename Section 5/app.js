@@ -3,10 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+
+app.set('view engine','pug');
+app.set('views','views');
 //If a certian response needs to be applied to all routes, 
 //always include this middleware above all the others
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +27,7 @@ this way only the correct middleware will be processed!
  * address to be considered by express.js
  */
 
-app.use('/admin', adminRoutes);
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
