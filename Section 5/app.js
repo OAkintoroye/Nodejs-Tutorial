@@ -3,10 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+
+app.set('view engine','pug');
+app.set('views','views');
 //If a certian response needs to be applied to all routes, 
 //always include this middleware above all the others
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,14 +27,15 @@ this way only the correct middleware will be processed!
  * address to be considered by express.js
  */
 
-app.use('/admin', adminRoutes);
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
     //if a route is entered but there is no middleware set for it
     //submit a 404 error status and a message using send
     // res.status(404).send('<h1>Page not found!</h1>');
-    res.status(404).sendFile(path.join(__dirname, 'views', 'notfound.html'));
+   // res.status(404).sendFile(path.join(__dirname, 'views', 'notfound.html'));
+    res.status(404).render('notfound',{pageTitle: 'Page Not Found'});
 
 });
 app.listen(3000);
