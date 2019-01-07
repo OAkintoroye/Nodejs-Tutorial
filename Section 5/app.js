@@ -35,7 +35,7 @@ app.use((req, res, next) => {
     //submit a 404 error status and a message using send
     // res.status(404).send('<h1>Page not found!</h1>');
    // res.status(404).sendFile(path.join(__dirname, 'views', 'notfound.html'));
-    res.status(404).render('notfound');
+    res.status(404).render('notfound',{pageTitle: 'Page Not Found'});
 
 });
 app.listen(3000);
